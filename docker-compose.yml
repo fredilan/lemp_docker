@@ -7,8 +7,11 @@ services:
     php:
         build:
             dockerfile: php/Dockerfile
+        ports: 
+            - 5173:5173
+            - 9000:9000
         volumes:
-            - './www-data:/var/www/html'
+            - './www-data/codeigniter:/var/www/html'
         depends_on:
             - mariadb
 
@@ -17,10 +20,11 @@ services:
         image: nginx:latest
         ports:
             - 80:80
+            - 81:81
         links:
             - 'php'
         volumes:
-            - './www-data:/var/www/html'
+            - './www-data/codeigniter:/var/www/html'
             - './nginx:/etc/nginx/conf.d'
         depends_on:
             - php
